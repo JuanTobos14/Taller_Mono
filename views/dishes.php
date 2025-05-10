@@ -53,7 +53,7 @@ $categories = $categoriesController->queryAllCategories();
                     <td><?= $dishe->get('idCategory') ?></td>
                     <td>
                         <a href="form_dishe.php?id=<?= $dishe->get('id') ?>">Modificar</a>
-                        <a href="deleteCategory.php?id=<?= $category->get('id') ?>" onclick="return confirm('¿Estás seguro de que deseas eliminar esta categoría?');">Eliminar</a>
+                        <a href="actions/deleteCategory.php?id=<?= $category->get('id') ?>" onclick="return confirm('¿Estás seguro de que deseas eliminar esta categoría?');">Eliminar</a>
                     </td>
                 </tr>
             <?php endforeach; ?>

@@ -1,8 +1,8 @@
 <?php
-include '../models/drivers/conexDB.php';
-include '../models/entities/entity.php';
-include '../models/entities/dishe.php';
-include '../controllers/dishesController.php';
+include '../../models/drivers/conexDB.php';
+include '../../models/entities/entity.php';
+include '../../models/entities/dishe.php';
+include '../../controllers/dishesController.php';
 
 use app\controllers\DishesController;
 $controller = new DishesController();
@@ -28,6 +28,6 @@ $result = empty($_POST['idInput'])
         echo '<p>No se pudo GUARDAR los datos</p>';
     }   
     ?>
-    <a href="dishes.php">Volver</a>
+    <a href="../dishes.php">Volver</a>
 </body>
 </html>

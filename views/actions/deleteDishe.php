@@ -1,8 +1,8 @@
 <?php
-include '../models/drivers/conexDB.php';
-include '../models/entities/entity.php';
-include '../models/entities/dishe.php';
-include '../controllers/dishesController.php';
+include '../../models/drivers/conexDB.php';
+include '../../models/entities/entity.php';
+include '../../models/entities/dishe.php';
+include '../../controllers/dishesController.php';
 
 use app\controllers\DishesController;
 
@@ -28,6 +28,6 @@ if ($result) {
 <body>
     <h1>Resultado de la eliminación del plato</h1>
     <p><?= $message ?></p>
-    <a href="dishes.php">Volver a Platos</a>
+    <a href="../dishes.php">Volver a Platos</a>
 </body>
 </html>

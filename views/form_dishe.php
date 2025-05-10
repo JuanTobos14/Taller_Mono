@@ -26,8 +26,7 @@ if ($isEditing) {
             break;
         }
     }
-
-    // Obtener nombre de la categoría asociada
+    
     $categoriesController = new CategoriesController();
     $categories = $categoriesController->queryAllCategories();
     foreach ($categories as $cat) {

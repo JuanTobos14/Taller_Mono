@@ -1,8 +1,8 @@
 <?php
-include '../models/drivers/conexDB.php';
-include '../models/entities/entity.php';
-include '../models/entities/restaurant_table.php';
-include '../controllers/tablesController.php';
+include '../../models/drivers/conexDB.php';
+include '../../models/entities/entity.php';
+include '../../models/entities/restaurant_table.php';
+include '../../controllers/tablesController.php';
 
 use app\controllers\TablesController;
 
@@ -21,6 +21,6 @@ $result = $controller->deleteTable($id);
 <body>
     <h1>Resultado de la eliminación</h1>
     <p><?= $result ? 'Mesa eliminada correctamente.' : 'No se pudo eliminar la mesa. Puede estar relacionada con alguna orden.' ?></p>
-    <a href="restaurant_tables.php">Volver</a>
+    <a href="../restaurant_tables.php">Volver</a>
 </body>
 </html>

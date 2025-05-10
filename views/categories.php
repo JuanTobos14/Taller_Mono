@@ -44,7 +44,7 @@ $categories = $controller->queryAllCategories();
                     <td><?= $category->get('name') ?></td>
                     <td>
                         <a href="form_category.php?id=<?= $category->get('id') ?>">Modificar</a>
-                        <a href="deleteCategory.php?id=<?= $category->get('id') ?>" onclick="return confirm('¿Estás seguro de que deseas eliminar esta categoría?');">Eliminar</a>
+                        <a href="actions/deleteCategory.php?id=<?= $category->get('id') ?>" onclick="return confirm('¿Estás seguro de que deseas eliminar esta categoría?');">Eliminar</a>
                     </td>
                 </tr>
             <?php endforeach; ?>

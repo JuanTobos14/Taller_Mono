@@ -1,8 +1,8 @@
 <?php
-include '../models/drivers/conexDB.php';
-include '../models/entities/entity.php';
-include '../models/entities/restaurant_table.php';
-include '../controllers/tablesController.php';
+include '../../models/drivers/conexDB.php';
+include '../../models/entities/entity.php';
+include '../../models/entities/restaurant_table.php';
+include '../../controllers/tablesController.php';
 
 use app\controllers\TablesController;
 
@@ -23,6 +23,6 @@ $result = empty($_POST['idInput'])
 <body>
     <h1>Resultado de la operación</h1>
     <p><?= $result ? 'Datos GUARDADOS' : 'No se pudo GUARDAR los datos' ?></p>
-    <a href="restaurant_tables.php">Volver</a>
+    <a href="../restaurant_tables.php">Volver</a>
 </body>
 </html>

@@ -1,8 +1,8 @@
 <?php
-include '../models/drivers/conexDB.php';
-include '../models/entities/entity.php';
-include '../models/entities/category.php';
-include '../controllers/categoriesController.php';
+include '../../models/drivers/conexDB.php';
+include '../../models/entities/entity.php';
+include '../../models/entities/category.php';
+include '../../controllers/categoriesController.php';
 
 use app\controllers\CategoriesController;
 
@@ -24,6 +24,6 @@ $result = $controller->deleteCategory($id);
     <?php
     echo "<p>" . $result . "</p>";
     ?>
-    <a href="categories.php">Volver a Categorías</a>
+    <a href="../categories.php">Volver a Categorías</a>
 </body>
 </html>

@@ -44,7 +44,7 @@ $tables=$controller->queryAllTables();
                     <td><?= $table->get('name') ?></td>
                     <td>
                         <a href="form_table.php?id=<?= $table->get('id') ?>">Modificar</a>
-                        <a href="deleteTable.php?id=<?= $table->get('id') ?>" onclick="return confirm('¿Estás seguro de que deseas eliminar esta mesa?');">Eliminar</a>
+                        <a href="actions/deleteTable.php?id=<?= $table->get('id') ?>" onclick="return confirm('¿Estás seguro de que deseas eliminar esta mesa?');">Eliminar</a>
                     </td>
                 </tr>
             <?php endforeach; ?>
