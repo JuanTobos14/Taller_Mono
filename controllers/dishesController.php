@@ -34,8 +34,22 @@ class DishesController
     public function deleteDishe($id)
     {
         $dishe = new Dishe();
+
+        $db = new \app\models\drivers\ConexDB();
+        $sql = "SELECT COUNT(*) AS count FROM order_details WHERE idDish = $id";
+        $result = $db->execSQL($sql);
+        $row = $result->fetch_assoc();
+
+        if ($row['count'] > 0) {
+            $db->close();
+            return false;
+        }
+
         $dishe->set('id', $id);
-        return $dishe->delete();
+        $result = $dishe->delete();
+
+        $db->close();
+        return $result;
     }
     
 }

@@ -3,7 +3,7 @@
 namespace app\models\entities;
 use app\models\drivers\ConexDB;
 
-class Dishe extends Entity
+class Dishe extends Entity 
 {
     protected $id = null;
     protected $description = "";

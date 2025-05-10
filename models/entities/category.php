@@ -1,7 +1,8 @@
-<?php 
+<?php
 
 namespace app\models\entities;
 use app\models\drivers\ConexDB;
+use app\models\entities\Dishe;
 
 class Category extends Entity
 {
@@ -54,22 +55,22 @@ class Category extends Entity
     }
 
     public function getPlatosAsociados()
-{
-    $sql = "SELECT * FROM dishes WHERE category_id = " . $this->id;
-    $conex = new ConexDB();
-    $resultDb = $conex->execSQL($sql);
-    $platos = [];
-    
-    if ($resultDb->num_rows > 0) {
-        while ($rowDb = $resultDb->fetch_assoc()) {
-            $plato = new Dishe();
-            $plato->set('id', $rowDb['id']);
-            $plato->set('name', $rowDb['name']);
-            array_push($platos, $plato);
+    {
+        $sql = "SELECT * FROM dishes WHERE idCategory = " . $this->id;
+        $conex = new ConexDB();
+        $resultDb = $conex->execSQL($sql);
+        $dishes = [];
+        
+        if ($resultDb->num_rows > 0) {
+            while ($rowDb = $resultDb->fetch_assoc()) {
+                $dishe = new Dishe();
+                $dishe->set('id', $rowDb['id']);
+                $dishe->set('name', $rowDb['name']);
+                array_push($dishes, $dishe);
+            }
         }
+        
+        $conex->close();
+        return $dishes;
     }
-    
-    $conex->close();
-    return $platos;
-}
 }

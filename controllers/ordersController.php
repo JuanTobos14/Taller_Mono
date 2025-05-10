@@ -12,7 +12,7 @@ class OrdersController
         return $data;
     }
 
-    public function saveNewCatregoy($request)
+    public function saveNewOrder($request)
     {
         $order= new Order();
         $order->set('dateOrder', $request['dateOrderInput']);
@@ -21,7 +21,7 @@ class OrdersController
         return $order->save();
     }
 
-    public function updateCategory($request)
+    public function updateOrder($request)
     {
         $order = new Order();
         $order->set('id', $request['idInput']);
@@ -31,7 +31,7 @@ class OrdersController
         return $order->update();
     }
 
-    public function deleteCategory($id)
+    public function deleteOrder($id)
     {
         $order = new Order();
         $order->set('id', $id);

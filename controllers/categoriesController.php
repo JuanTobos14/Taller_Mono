@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 use app\models\entities\Category;
+use app\models\drivers\ConexDB;
 
 class CategoriesController
 {
@@ -29,17 +30,19 @@ class CategoriesController
 
     public function deleteCategory($id)
     {
-    // Verificar si la categoría está asociada a algún plato antes de eliminar
-    $category = new Category();
-    $category->set('id', $id);
-    
-    // Verificar si la categoría está asociada a platos
-    $platosAsociados = $category->getPlatosAsociados(); // Método que debes crear para obtener los platos relacionados
-    
-    if (count($platosAsociados) > 0) {
-        return false;  // No se puede eliminar
-    }
-    
-    return $category->delete();  // Si no está asociada, eliminar
+        $category = new Category();
+        $category->set('id', $id);
+        $conex = new ConexDB();
+        $sql = "SELECT * FROM dishes WHERE idCategory = " . $category->get('id');
+        $resultDb = $conex->execSQL($sql);
+
+        if ($resultDb->num_rows > 0) {
+            $conex->close();
+            return "No se puede eliminar la categoría porque está asociada a uno o más platos.";
+        }
+        $deleted = $category->delete();
+        $conex->close();
+
+        return $deleted ? "Categoría eliminada correctamente." : "Error al eliminar la categoría.";
     }
 }

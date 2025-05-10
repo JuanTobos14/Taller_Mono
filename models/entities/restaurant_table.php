@@ -28,16 +28,28 @@ class Table extends Entity
 
     public function save()
     {
-
+        $sql = "INSERT INTO restaurant_tables (name) VALUES ('{$this->name}')";
+        $conex = new ConexDB();
+        $resultDB = $conex->execSQL($sql);
+        $conex->close();
+        return $resultDB;
     }
 
     public function update()
     {
-        
+        $sql = "UPDATE restaurant_tables SET name='{$this->name}' WHERE id={$this->id}";
+        $conex = new ConexDB();
+        $resultDB = $conex->execSQL($sql);
+        $conex->close();
+        return $resultDB;
     }
 
     public function delete()
     {
-        
+        $sql = "DELETE FROM restaurant_tables WHERE id = {$this->id}";
+        $conex = new ConexDB();
+        $resultDB = $conex->execSQL($sql);
+        $conex->close();
+        return $resultDB;     
     }
 }

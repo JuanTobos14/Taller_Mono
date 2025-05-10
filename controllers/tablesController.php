@@ -2,24 +2,24 @@
 
 namespace app\controllers;
 use app\models\entities\Table;
+use app\models\drivers\ConexDB;
 
 class TablesController
 {
-    public function queryAllCategories()
+   public function queryAllTables()
     {
-        $table= new Table();
-        $data= $table->all();
-        return $data;
+        $table = new Table();
+        return $table->all();
     }
 
-    public function saveNewCatregoy($request)
+    public function saveNewTable($request)
     {
-        $table= new Table();
+        $table = new Table();
         $table->set('name', $request['nameInput']);
         return $table->save();
     }
 
-    public function updateCategory($request)
+    public function updateTable($request)
     {
         $table = new Table();
         $table->set('id', $request['idInput']);
@@ -27,11 +27,21 @@ class TablesController
         return $table->update();
     }
 
-    public function deleteCategory($id)
+    public function deleteTable($id)
     {
-        $table = new Table();
+         $table = new Table();
         $table->set('id', $id);
-        return $table->delete();
+        $conex = new ConexDB();
+        $sqlCheck = "SELECT * FROM orders WHERE idTable = {$id}";
+        $resultCheck = $conex->execSQL($sqlCheck);
+
+        if ($resultCheck->num_rows > 0) {
+          $conex->close();
+          return "No se puede eliminar la mesa porque está asociada a una o más órdenes.";
+        }
+
+        $deleted = $table->delete();
+        $conex->close();
+        return $deleted ? "Mesa eliminada correctamente." : "Error al eliminar la mesa.";
     }
-    
 }
