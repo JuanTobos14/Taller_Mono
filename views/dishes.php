@@ -2,12 +2,18 @@
 include '../models/drivers/conexDB.php';
 include '../models/entities/entity.php';
 include '../models/entities/dishe.php';
+include '../models/entities/category.php';
 include '../controllers/dishesController.php';
+include '../controllers/categoriesController.php';
 
 use app\controllers\DishesController;
+use app\controllers\CategoriesController;
 
-$controller=new DishesController();
-$dishes=$controller->queryAllDishes();
+$controller = new DishesController();
+$dishes = $controller->queryAllDishes();
+
+$categoriesController = new CategoriesController();
+$categories = $categoriesController->queryAllCategories();
 ?>
 
 <!DOCTYPE html>
@@ -15,7 +21,7 @@ $dishes=$controller->queryAllDishes();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Categorías</title>
+    <title>Platos</title>
 </head>
 <body>
     <h1>Platos</h1>
@@ -38,17 +44,17 @@ $dishes=$controller->queryAllDishes();
             </tr>
         </thead>
         <tbody>
-            <?php
-                foreach($dishes as $dishe){
-                    echo '<tr>';
-                    echo '<td>'.$dishe->get('id').'</td>';
-                    echo '<td>'.$dishe->get('description').'</td>';
-                    echo '<td>'.$dishe->get('price').'</td>';
-                    echo '<td>'.$dishe->get('idCategory').'</td>';
-                    echo '</tr>';
-                }
-            ?>
-        </tbody>
+            <a href="form_dishe.php">Registrar nuevo plato</a>
+            <?php foreach ($dishes as $dishe): ?>
+                <tr>
+                    <td><?= $dishe->get('id') ?></td>
+                    <td><?= $dishe->get('description') ?></td>
+                    <td><?= $dishe->get('price') ?></td>
+                    <td><?= $dishe->get('idCategory') ?></td>
+                    <td><a href="form_dishe.php?id=<?= $dishe->get('id') ?>">Modificar</a></td>
+                    <td><a href="deleteDishe.php?id=<?= $dishe->get('id') ?>">Eliminar</a></td>
+                </tr>
+            <?php endforeach; ?>
         </tbody>
     </table>
 </body>

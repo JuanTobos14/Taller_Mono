@@ -12,7 +12,7 @@ class DishesController
         return $data;
     }
 
-    public function saveNewCatregoy($request)
+    public function saveNewDishe($request)
     {
         $dishe= new Dishe();
         $dishe->set('description', $request['descriptionInput']);
@@ -21,7 +21,7 @@ class DishesController
         return $dishe->save();
     }
 
-    public function updateCategory($request)
+    public function updateDishe($request)
     {
         $dishe = new Dishe();
         $dishe->set('id', $request['idInput']);
@@ -31,7 +31,7 @@ class DishesController
         return $dishe->update();
     }
 
-    public function deleteCategory($id)
+    public function deleteDishe($id)
     {
         $dishe = new Dishe();
         $dishe->set('id', $id);

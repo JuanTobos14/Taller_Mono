@@ -6,8 +6,8 @@ include '../controllers/categoriesController.php';
 
 use app\controllers\CategoriesController;
 
-$controller=new CategoriesController();
-$categories=$controller->queryAllCategories();
+$controller = new CategoriesController();
+$categories = $controller->queryAllCategories();
 ?>
 
 <!DOCTYPE html>
@@ -18,7 +18,7 @@ $categories=$controller->queryAllCategories();
     <title>Categorías</title>
 </head>
 <body>
-    <h1>Categorias</h1>
+    <h1>Categorías</h1>
 
     <div class="menu">
         <a href="categories.php">Categorías</a>
@@ -28,23 +28,26 @@ $categories=$controller->queryAllCategories();
         <a href="restaurant_tables.php">Mesas</a>
     </div>
 
+    <a href="form_category.php">Registrar nueva categoría</a>
     <table>
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Nombre</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
-            <?php
-                foreach($categories as $category){
-                    echo '<tr>';
-                    echo '<td>'.$category->get('id').'</td>';
-                    echo '<td>'.$category->get('name').'</td>';
-                    echo '</tr>';
-                }
-            ?>
-        </tbody>
+            <?php foreach ($categories as $category): ?>
+                <tr>
+                    <td><?= $category->get('id') ?></td>
+                    <td><?= $category->get('name') ?></td>
+                    <td>
+                        <a href="form_category.php?id=<?= $category->get('id') ?>">Modificar</a>
+                        <a href="deleteCategory.php?id=<?= $category->get('id') ?>">Eliminar</a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
         </tbody>
     </table>
 </body>

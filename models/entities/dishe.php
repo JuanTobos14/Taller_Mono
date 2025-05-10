@@ -33,16 +33,33 @@ class Dishe extends Entity
 
     public function save()
     {
-
+        $sql = "insert into dishes (description,price,idCategory) values";
+        $sql .= "('".$this->description."','". $this->price ."',". $this->idCategory .")";
+        $conex = new ConexDB();
+        $resultDB = $conex->execSQL($sql);
+        $conex->close();
+        return $resultDB;
     }
 
     public function update()
     {
-        
+        $sql = "update dishes set ";
+        $sql .= "description='".$this->description."',";
+        $sql .= "price='".$this->price."',";
+        $sql .= "idCategory=".$this->idCategory;
+        $sql .= " where id=" .$this->id;
+        $conex = new ConexDB();
+        $resultDB = $conex->execSQL($sql);
+        $conex->close();
+        return $resultDB;
     }
 
     public function delete()
     {
-        
+        $sql = "delete from dishes where id=" . $this->id;
+        $conex = new ConexDB();
+        $resultDB = $conex->execSQL($sql);
+        $conex->close();
+        return $resultDB;
     }
 }

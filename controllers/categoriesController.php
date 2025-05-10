@@ -7,14 +7,14 @@ class CategoriesController
 {
     public function queryAllCategories()
     {
-        $category= new Category();
-        $data= $category->all();
+        $category = new Category();
+        $data = $category->all();
         return $data;
     }
 
-    public function saveNewCatregoy($request)
+    public function saveNewCategory($request)
     {
-        $category= new Category();
+        $category = new Category();
         $category->set('name', $request['nameInput']);
         return $category->save();
     }
@@ -29,9 +29,17 @@ class CategoriesController
 
     public function deleteCategory($id)
     {
-        $category = new Category();
-        $category->set('id', $id);
-        return $category->delete();
+    // Verificar si la categoría está asociada a algún plato antes de eliminar
+    $category = new Category();
+    $category->set('id', $id);
+    
+    // Verificar si la categoría está asociada a platos
+    $platosAsociados = $category->getPlatosAsociados(); // Método que debes crear para obtener los platos relacionados
+    
+    if (count($platosAsociados) > 0) {
+        return false;  // No se puede eliminar
     }
     
+    return $category->delete();  // Si no está asociada, eliminar
+    }
 }
