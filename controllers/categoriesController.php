@@ -1,6 +1,6 @@
 <?php
 namespace app\controllers;
-// Cargar manualmente las clases necesarias
+
 require_once __DIR__ . '/../models/entities/Category.php';
 require_once __DIR__ . '/../models/entities/Dishe.php';
 require_once __DIR__ . '/../models/drivers/ConexDB.php';
