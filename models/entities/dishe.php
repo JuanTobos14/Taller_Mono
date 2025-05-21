@@ -1,5 +1,8 @@
 <?php
 namespace app\models\entities;
+
+include_once '../../models/entities/order_detail.php';
+
 use app\models\drivers\ConexDB;
 use Exception;
 

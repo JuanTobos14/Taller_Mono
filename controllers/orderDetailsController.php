@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+include_once __DIR__ . '/../models/drivers/conexDB.php';
+
 use app\models\entities\OrderDetail;
 use app\models\entities\Order;
 use app\models\entities\Dish;

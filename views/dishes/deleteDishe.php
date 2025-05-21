@@ -2,7 +2,6 @@
 include '../../models/drivers/conexDB.php';
 include '../../models/entities/entity.php';
 include '../../models/entities/dishe.php';
-include '../../models/entities/order_detail.php';
 include '../../controllers/dishesController.php';
 
 use app\controllers\DishesController;
@@ -11,7 +10,6 @@ $controller = new DishesController();
 $id = $_GET['id'];
 
 $result = $controller->deleteDish($id);
-
 ?>
 
 <!DOCTYPE html>
@@ -20,12 +18,13 @@ $result = $controller->deleteDish($id);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eliminar Plato</title>
+    <link rel="stylesheet" href="../../style.css">
 </head>
 <body>
-    <h1>Resultado de la eliminación del plato</h1>
-    <?php
-    echo "<p>" . ($result ? "Plato eliminado exitosamente." : "No se pudo eliminar el plato.") . "</p>";
-    ?>
-    <a href="dishes.php">Volver a los platos</a>
+    <div class="container">
+        <h1>Resultado de la eliminación del plato</h1>
+        <p><?= $result ? "Plato eliminado exitosamente." : "No se pudo eliminar el plato." ?></p>
+        <a href="dishes.php" class="add-link">Volver a los platos</a>
+    </div>
 </body>
 </html>

@@ -39,49 +39,69 @@ $categories = $controller->queryAllCategories();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= empty($id) ? 'Registrar' : 'Modificar' ?> Plato</title>
+    <link rel="stylesheet" href="../../style.css">
 </head>
 <body>
-    <h1><?= empty($id) ? 'Registrar nuevo plato' : 'Modificar plato' ?></h1>
+    <div class="container">
+        <h1><?= empty($id) ? 'Registrar nuevo plato' : 'Modificar plato' ?></h1>
 
-    <form action="saveDishe.php" method="post">
-        <?php if (!empty($id)): ?>
-            <input type="hidden" name="idInput" value="<?= $id ?>">
-        <?php endif; ?>
+        <form action="saveDishe.php" method="post">
+            <?php if (!empty($id)): ?>
+                <input type="hidden" name="idInput" value="<?= $id ?>">
+            <?php endif; ?>
 
-        <div>
-            <label>Descripción del Plato:</label>
-            <input type="text" name="descriptionInput" required value="<?= $description ?>">
-        </div>
+            <div>
+                <label>Descripción del Plato:</label>
+                <input type="text" name="descriptionInput" required value="<?= $description ?>">
+            </div>
 
-        <div>
-            <label>Precio:</label>
-            <input type="number" name="priceInput" required value="<?= $price ?>" step="0.01">
-        </div>
+            <div>
+                <label>Precio:</label>
+                <input type="number" name="priceInput" required value="<?= $price ?>" step="0.01">
+            </div>
 
-        <div>
-            <label>Categoría:</label>
-            <select name="idCategoryInput">
-                <option value="">Seleccione una categoría</option>
-                <?php
-                // Asegúrate de que $categories no esté vacío
-                if (!empty($categories)) {
+            <div>
+                <label>Categoría:</label>
+                <?php if (!empty($id)): ?>
+                    <!-- Si estamos editando, mostramos el nombre de la categoría -->
+                    <?php
+                    // Buscar el nombre de la categoría a partir del idCategory
+                    $categoryName = '';
                     foreach ($categories as $category) {
-                        echo "<option value='" . $category->get('id') . "' " . 
-                             ($idCategory == $category->get('id') ? 'selected' : '') . ">" . 
-                             $category->get('name') . "</option>";
+                        if ($category->get('id') == $idCategory) {
+                            $categoryName = $category->get('name');
+                            break;
+                        }
                     }
-                } else {
-                    echo "<option value=''>No hay categorías disponibles</option>";
-                }
-                ?>
-            </select>
-        </div>
+                    ?>
+                    <span><?= $categoryName ?></span> <!-- Muestra el nombre de la categoría como texto -->
+                    <input type="hidden" name="idCategoryInput" value="<?= $idCategory ?>"> <!-- Envía el idCategory al servidor -->
+                <?php else: ?>
+                    <!-- Si no estamos editando, mostramos el select -->
+                    <select name="idCategoryInput">
+                        <option value="">Seleccione una categoría</option>
+                        <?php
+                        // Asegúrate de que $categories no esté vacío
+                        if (!empty($categories)) {
+                            foreach ($categories as $category) {
+                                echo "<option value='" . $category->get('id') . "' " . 
+                                     ($idCategory == $category->get('id') ? 'selected' : '') . ">" . 
+                                     $category->get('name') . "</option>";
+                            }
+                        } else {
+                            echo "<option value=''>No hay categorías disponibles</option>";
+                        }
+                        ?>
+                    </select>
+                <?php endif; ?>
+            </div>
 
-        <div>
-            <button type="submit">Guardar</button>
-        </div>
+            <div>
+                <button type="submit">Guardar</button>
+            </div>
 
-        <a href="dishes.php">Volver</a>
-    </form>
+            <a href="dishes.php" class="add-link">Volver</a>
+        </form>
+    </div>
 </body>
 </html>

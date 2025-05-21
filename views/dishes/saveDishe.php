@@ -13,7 +13,6 @@ if (!empty($_POST['idInput'])) {
 } else {
     $result = $controller->saveNewDish($_POST);
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -22,17 +21,20 @@ if (!empty($_POST['idInput'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resultado de la operación</title>
+    <link rel="stylesheet" href="../../style.css">
 </head>
 <body>
-    <h1>Resultado de la operación</h1>
-    <br>
-    <?php
-    if ($result) {
-        echo '<p>Plato guardado exitosamente.</p>';
-    } else {
-        echo '<p>No se pudo guardar el plato.</p>';
-    }
-    ?>
-    <a href="dishes.php">Volver a los platos</a>
+    <div class="container">
+        <h1>Resultado de la operación</h1>
+        <br>
+        <?php
+        if ($result) {
+            echo '<p>Plato guardado exitosamente.</p>';
+        } else {
+            echo '<p>No se pudo guardar el plato.</p>';
+        }
+        ?>
+        <a href="dishes.php" class="add-link">Volver a los platos</a>
+    </div>
 </body>
 </html>

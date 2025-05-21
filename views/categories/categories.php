@@ -2,7 +2,6 @@
 include '../../models/drivers/conexDB.php';
 include '../../models/entities/entity.php';
 include '../../models/entities/category.php';
-include '../../models/entities/dishe.php';
 include '../../controllers/categoriesController.php';
 
 use app\controllers\CategoriesController;
@@ -17,20 +16,19 @@ $categories = $controller->queryAllCategories();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Categorías</title>
+    <link rel="stylesheet" href="../../style.css">
 </head>
 <body>
     <h1>Categorías</h1>
 
     <div class="menu">
         <a href="../../index.html">Pag. Principal</a>
-        <a href="../categories/categories.php">Categorías</a>
         <a href="../dishes/dishes.php">Platos</a>
         <a href="../orders/orders.php">Ordenes</a>
-        <a href="../order_details/order_details.php">Detalles Orden</a>
         <a href="../tables/restaurant_tables.php">Mesas</a>
     </div>
 
-    <a href="form_category.php">Registrar nueva categoría</a>
+    <a class="add-link" href="form_category.php">Registrar nueva categoría</a>
 
     <!-- Mensaje de éxito o error -->
     <?php if (isset($_GET['result'])): ?>
@@ -53,8 +51,8 @@ $categories = $controller->queryAllCategories();
                     <td><?= $category->get('id') ?></td>
                     <td><?= $category->get('name') ?></td>
                     <td>
-                        <a href="form_category.php?id=<?= $category->get('id') ?>">Modificar</a>
-                        <a href="deleteCategory.php?id=<?= $category->get('id') ?>" onclick="return confirm('¿Estás seguro de que deseas eliminar esta categoría?');">Eliminar</a>
+                        <a class="modify" href="form_category.php?id=<?= $category->get('id') ?>">Modificar</a>
+                        <a class="delete" href="deleteCategory.php?id=<?= $category->get('id') ?>" onclick="return confirm('¿Estás seguro de que deseas eliminar esta categoría?');">Eliminar</a>
                     </td>
                 </tr>
             <?php endforeach; ?>

@@ -29,6 +29,7 @@ if (!empty($_GET['id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= empty($id) ? 'Registrar' : 'Modificar' ?> Categoría</title>
+    <link rel="stylesheet" href="../../style.css">
 </head>
 <body>
     <h1><?= empty($id) ? 'Registrar nueva categoría' : 'Modificar categoría' ?></h1>
@@ -44,10 +45,10 @@ if (!empty($_GET['id'])) {
         </div>
 
         <div>
-            <button type="submit">Guardar</button>
+            <button class="add-link" type="submit">Guardar</button>
         </div>
 
-        <a href="categories.php">Volver</a>
+        <a class="add-link" href="categories.php">Volver</a>
     </form>
 </body>
 </html>

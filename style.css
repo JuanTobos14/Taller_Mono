@@ -1,0 +1,191 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Variables de color */
+:root {
+    --color-primary: #ffd342;  /* Amarillo */
+    --color-secondary: #491b1b;  /* Azul oscuro */
+    --color-accent: #E07B5B;  /* Terracota */
+    --color-background: #f4f4f4;
+    --color-white: #ffffff;
+    --color-light: rgba(255, 255, 255, 0.1);
+}
+
+/* Fondo general */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-image: url(https://st.depositphotos.com/1272497/1365/v/450/depositphotos_13658130-stock-illustration-yemek-fon.jpg);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+/* Contenedor principal */
+.container {
+    padding: 50px 40px;
+    width: 90%;
+    max-width: 800px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+}
+
+/* Título principal */
+h1 {
+    font-size: 72px;
+    color: var(--color-primary);
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 40px;
+}
+
+/* Menú de navegación */
+.menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+/* Estilo de los enlaces del menú */
+.menu a {
+    color: var(--color-primary);
+    padding: 10px 20px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    text-align: center;
+    min-width: 160px;
+    cursor: pointer;
+}
+
+.menu a:hover {
+    background-color: var(--color-primary);
+    color: var(--color-accent);
+}
+
+/* Estilo de los enlaces fuera del menú */
+.add-link {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: var(--color-secondary);
+    color: var(--color-primary);
+    font-weight: bold;
+    text-decoration: none;
+    margin-top: 30px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.add-link:hover {
+    background-color: var(--color-primary);
+    color: var(--color-accent);
+}
+
+/* Estilo de las tablas */
+table {
+    width: 100%;
+    margin-top: 40px;
+    border-collapse: collapse;
+    background-color: var(--color-light);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+table th, table td {
+    padding: 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--color-secondary);
+}
+
+table th {
+    background-color: var(--color-secondary);
+    color: var(--color-primary);
+}
+
+table tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Estilo de los botones en la tabla */
+.button {
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    margin: 5px;
+    display: inline-block;
+}
+
+.modify {
+    background-color: var(--color-primary);
+    color: #1b2a49;
+    border: 2px solid var(--color-primary);
+}
+
+.modify:hover {
+    background-color: #e6c131;
+}
+
+.delete {
+    background-color: #f44336;
+    color: var(--color-white);
+    border: 2px solid #f44336;
+}
+
+.delete:hover {
+    background-color: #e31e2c;
+}
+
+/* Estilos generales para enlaces */
+a {
+    color: var(--color-white);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--color-primary);
+}
+
+/* Estilos de mensajes */
+.message {
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* Botones */
+button {
+    background-color: #28a745;
+    color: var(--color-white);
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #218838;
+}
