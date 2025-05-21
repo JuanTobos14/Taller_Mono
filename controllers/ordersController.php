@@ -96,6 +96,51 @@ class OrdersController
             return false;
         }
     }
+    
+    public function generateOrdersReport($startDate, $endDate)
+    {
+        $db = new ConexDB();
+        $sql = "SELECT * FROM orders WHERE dateOrder BETWEEN '{$startDate}' AND '{$endDate}' AND anular = 0";
+        $result = $db->execSQL($sql);
+        $ordersData = $result->fetch_all(MYSQLI_ASSOC);
+        
+        $totalRevenue = 0;
+        $dishSales = [];
+        foreach ($ordersData as $orderData) {
+            $orderDetails = new OrderDetail();
+            $orderDetails->set('idOrder', $orderData['id']);
+            $detailsData = $orderDetails->all();
+            
+            foreach ($detailsData as $detail) {
+                $dishId = $detail['idDish'];
+                if (!isset($dishSales[$dishId])) {
+                    $dishSales[$dishId] = 0;
+                }
+                $dishSales[$dishId] += $detail['quantity'];
+            }
+            
+            $totalRevenue += $orderData['total'];
+        }
+        
+        arsort($dishSales);
+        
+        return ['orders' => $ordersData, 'totalRevenue' => $totalRevenue, 'dishSales' => $dishSales];
+    }
+
+    public function generateCancelledOrdersReport($startDate, $endDate)
+    {
+        $db = new ConexDB();
+        $sql = "SELECT * FROM orders WHERE dateOrder BETWEEN '{$startDate}' AND '{$endDate}' AND anular = 1";
+        $result = $db->execSQL($sql);
+        $ordersData = $result->fetch_all(MYSQLI_ASSOC);
+        
+        $totalCancelled = 0;
+        foreach ($ordersData as $orderData) {
+            $totalCancelled += $orderData['total'];
+        }
+
+        return ['orders' => $ordersData, 'totalCancelled' => $totalCancelled];
+    }
 
     public function queryAllOrders()
     {
@@ -112,6 +157,7 @@ class OrdersController
             $order->set('idTable', $row['idTable']);
             $order->set('anulada', isset($row['anular']) ? (bool)$row['anular'] : false);
             $order->set('table_name', $row['table_name']);
+            $orders[] = $order;
         }
 
         return $orders;
