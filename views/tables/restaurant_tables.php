@@ -16,17 +16,14 @@ $tables = $tableController->queryAllTables();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mesas</title>
-    <!-- Enlace al CSS -->
     <link rel="stylesheet" href="../../style.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <!-- Contenedor principal -->
     <div class="container">
         <h1>Mesas</h1>
 
-        <!-- Menú de navegación -->
         <div class="menu">
             <a href="../../index.html">Pag. Principal</a>
             <a href="../categories/categories.php">Categorías</a>
@@ -34,10 +31,8 @@ $tables = $tableController->queryAllTables();
             <a href="../orders/orders.php">Ordenes</a>
         </div>
 
-        <!-- Enlace para agregar nueva mesa -->
         <a href="form_table.php" class="add-link">Registrar nueva mesa</a>
 
-        <!-- Tabla de mesas -->
         <table>
             <thead>
                 <tr>

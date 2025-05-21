@@ -45,7 +45,6 @@ class Table extends Entity
 
     public function delete()
     {
-        // Verificar si la mesa está asociada a alguna orden
         $sql = "SELECT COUNT(*) AS order_count FROM orders WHERE idTable = {$this->id}";
         $conex = new ConexDB();
         $result = $conex->execSQL($sql);
@@ -53,7 +52,7 @@ class Table extends Entity
 
         if ($row['order_count'] > 0) {
             $conex->close();
-            return false; // No se puede eliminar si está asociada a órdenes
+            return false;
         }
 
         $sql = "DELETE FROM restaurant_tables WHERE id = {$this->id}";

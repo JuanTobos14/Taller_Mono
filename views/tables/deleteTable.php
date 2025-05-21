@@ -12,11 +12,9 @@ $id = $_GET['id'] ?? null;
 $message = '';
 
 if ($id !== null) {
-    // Verificar si la mesa está en uso
     if ($controller->isTableInUse($id)) {
         $message = "La mesa está en uso. No se puede eliminar hasta que todas las órdenes asociadas sean anuladas o completadas.";
     } else {
-        // Si no está en uso, proceder con la eliminación
         $result = $controller->deleteTable($id);
         if ($result === "Mesa eliminada correctamente.") {
             $message = "La mesa ha sido eliminada exitosamente.";

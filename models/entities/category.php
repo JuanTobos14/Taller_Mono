@@ -47,7 +47,6 @@ class Category extends Entity
 
     public function delete()
     {
-        // Verificar si hay platos asociados a la categoría
         $sql = "SELECT COUNT(*) AS dish_count FROM dishes WHERE idCategory = " . $this->id;
         $conex = new ConexDB();
         $result = $conex->execSQL($sql);
@@ -55,10 +54,9 @@ class Category extends Entity
 
         if ($row['dish_count'] > 0) {
             $conex->close();
-            return false; // No se puede eliminar si la categoría tiene platos asociados
+            return false;
         }
 
-        // Si no hay platos asociados, proceder con la eliminación
         $sql = "DELETE FROM categories WHERE id=" . $this->id;
         $resultDB = $conex->execSQL($sql);
         $conex->close();

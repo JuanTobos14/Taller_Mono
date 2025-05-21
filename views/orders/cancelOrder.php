@@ -9,7 +9,6 @@ use app\controllers\OrdersController;
 $controller = new OrdersController();
 $id = $_GET['id'];
 
-// Aquí llamamos al método para anular la orden
 $result = $controller->anularOrder($id);
 
 ?>

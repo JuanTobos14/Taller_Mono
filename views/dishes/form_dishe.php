@@ -15,7 +15,6 @@ $description = '';
 $price = '';
 $idCategory = '';
 
-// Obtener el plato si se está editando
 if (!empty($_GET['id'])) {
     $dishes = $controller->queryAllDishes();
     foreach ($dishes as $dishe) {
@@ -29,7 +28,6 @@ if (!empty($_GET['id'])) {
     }
 }
 
-// Obtener todas las categorías
 $categories = $controller->queryAllCategories();
 ?>
 
@@ -63,9 +61,7 @@ $categories = $controller->queryAllCategories();
             <div>
                 <label>Categoría:</label>
                 <?php if (!empty($id)): ?>
-                    <!-- Si estamos editando, mostramos el nombre de la categoría -->
                     <?php
-                    // Buscar el nombre de la categoría a partir del idCategory
                     $categoryName = '';
                     foreach ($categories as $category) {
                         if ($category->get('id') == $idCategory) {
@@ -74,14 +70,12 @@ $categories = $controller->queryAllCategories();
                         }
                     }
                     ?>
-                    <span><?= $categoryName ?></span> <!-- Muestra el nombre de la categoría como texto -->
-                    <input type="hidden" name="idCategoryInput" value="<?= $idCategory ?>"> <!-- Envía el idCategory al servidor -->
+                    <span><?= $categoryName ?></span>
+                    <input type="hidden" name="idCategoryInput" value="<?= $idCategory ?>">
                 <?php else: ?>
-                    <!-- Si no estamos editando, mostramos el select -->
                     <select name="idCategoryInput">
                         <option value="">Seleccione una categoría</option>
                         <?php
-                        // Asegúrate de que $categories no esté vacío
                         if (!empty($categories)) {
                             foreach ($categories as $category) {
                                 echo "<option value='" . $category->get('id') . "' " . 

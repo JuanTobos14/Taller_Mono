@@ -15,11 +15,9 @@ class Dishe extends Entity
 
     public function all()
     {
-        // Si idCategory está definido, solo se filtra por esa categoría
         if ($this->idCategory !== null) {
             $sql = "SELECT * FROM dishes WHERE idCategory = {$this->idCategory}";
         } else {
-            // Si no se pasa idCategory, obtenemos todos los platos
             $sql = "SELECT * FROM dishes";
         }
     
@@ -39,7 +37,7 @@ class Dishe extends Entity
         }
     
         $conex->close();
-        return $dishes;  // Retorna un array de objetos Dishe
+        return $dishes;
     }
 
     public function save()

@@ -26,14 +26,12 @@ if ($orderId) {
     <div class="container">
         <h1>Detalles de la Orden</h1>
 
-        <!-- Mostrar la ID de la orden recibida -->
         <?php if ($orderId): ?>
             <h2>Detalles de la Orden #<?php echo htmlspecialchars($orderId); ?></h2>
         <?php else: ?>
             <p>No se ha proporcionado un ID de orden válido.</p>
         <?php endif; ?>
 
-        <!-- Si los detalles de la orden están disponibles, se muestran en la tabla -->
         <?php if ($orderDetails !== null): ?>
             <table>
                 <thead>
@@ -46,10 +44,10 @@ if ($orderId) {
                 </thead>
                 <tbody>
                     <?php
-                    $totalOrder = 0;  // Variable para almacenar el total de la orden
+                    $totalOrder = 0;
                     foreach ($orderDetails as $detail) {
-                        $subtotal = $detail['quantity'] * $detail['price'];  // Calcular el subtotal
-                        $totalOrder += $subtotal;  // Sumar al total de la orden
+                        $subtotal = $detail['quantity'] * $detail['price'];
+                        $totalOrder += $subtotal;
                     ?>
                         <tr>
                             <td><?php echo htmlspecialchars($detail['dishName']); ?></td>

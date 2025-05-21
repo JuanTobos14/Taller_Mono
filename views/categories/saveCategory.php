@@ -9,11 +9,9 @@ use app\controllers\CategoriesController;
 $controller = new CategoriesController();
 
 if (!empty($_POST['idInput'])) {
-    // Si el idInput no está vacío, significa que estamos actualizando una categoría existente.
-    $result = $controller->updateCategory($_POST);  // Función para actualizar la categoría
+    $result = $controller->updateCategory($_POST);
 } else {
-    // Si idInput está vacío, estamos creando una nueva categoría.
-    $result = $controller->saveNewCategory($_POST);  // Función para guardar nueva categoría
+    $result = $controller->saveNewCategory($_POST);
 }
 ?>
 

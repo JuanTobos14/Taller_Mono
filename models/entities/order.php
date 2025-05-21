@@ -10,7 +10,7 @@ class Order extends Entity
     protected $dateOrder = null;
     protected $total = null;
     protected $idTable = null;
-    protected $anular = 0; // Refleja la columna real en la base de datos
+    protected $anular = 0;
 
     public function all()
     {
