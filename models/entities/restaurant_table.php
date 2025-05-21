@@ -1,5 +1,4 @@
 <?php
-
 namespace app\models\entities;
 use app\models\drivers\ConexDB;
 
@@ -10,7 +9,7 @@ class Table extends Entity
 
     public function all()
     {
-        $sql = "select * from restaurant_tables";
+        $sql = "SELECT * FROM restaurant_tables";
         $conex = new ConexDB();
         $resultDb = $conex->execSQL($sql);
         $tables = [];
@@ -46,10 +45,38 @@ class Table extends Entity
 
     public function delete()
     {
-        $sql = "DELETE FROM restaurant_tables WHERE id = {$this->id}";
+        // Verificar si la mesa está asociada a alguna orden
+        $sql = "SELECT COUNT(*) AS order_count FROM orders WHERE idTable = {$this->id}";
         $conex = new ConexDB();
+        $result = $conex->execSQL($sql);
+        $row = $result->fetch_assoc();
+
+        if ($row['order_count'] > 0) {
+            $conex->close();
+            return false; // No se puede eliminar si está asociada a órdenes
+        }
+
+        $sql = "DELETE FROM restaurant_tables WHERE id = {$this->id}";
         $resultDB = $conex->execSQL($sql);
         $conex->close();
-        return $resultDB;     
+        return $resultDB;
+    }
+
+    public function find()
+    {
+        $sql = "SELECT * FROM restaurant_tables WHERE id = {$this->id}";
+        $conex = new ConexDB();
+        $result = $conex->execSQL($sql);
+        
+        if ($result && $result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $this->set('id', $row['id']);
+            $this->set('name', $row['name']);
+            $conex->close();
+            return $this;
+        }
+    
+        $conex->close();
+        return null;
     }
 }

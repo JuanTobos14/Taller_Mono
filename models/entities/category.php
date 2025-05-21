@@ -47,8 +47,19 @@ class Category extends Entity
 
     public function delete()
     {
-        $sql = "DELETE FROM categories WHERE id=" . $this->id;
+        // Verificar si hay platos asociados a la categoría
+        $sql = "SELECT COUNT(*) AS dish_count FROM dishes WHERE idCategory = " . $this->id;
         $conex = new ConexDB();
+        $result = $conex->execSQL($sql);
+        $row = $result->fetch_assoc();
+
+        if ($row['dish_count'] > 0) {
+            $conex->close();
+            return false; // No se puede eliminar si la categoría tiene platos asociados
+        }
+
+        // Si no hay platos asociados, proceder con la eliminación
+        $sql = "DELETE FROM categories WHERE id=" . $this->id;
         $resultDB = $conex->execSQL($sql);
         $conex->close();
         return $resultDB;
@@ -65,7 +76,8 @@ class Category extends Entity
             while ($rowDb = $resultDb->fetch_assoc()) {
                 $dishe = new Dishe();
                 $dishe->set('id', $rowDb['id']);
-                $dishe->set('name', $rowDb['name']);
+                $dishe->set('description', $rowDb['description']);
+                $dishe->set('price', $rowDb['price']);
                 array_push($dishes, $dishe);
             }
         }

@@ -8,9 +8,16 @@ use app\controllers\TablesController;
 
 $controller = new TablesController();
 
-$result = empty($_POST['idInput']) 
-    ? $controller->saveNewTable($_POST) 
-    : $controller->updateTable($_POST);
+$id = $_POST['idInput'] ?? null;
+$name = $_POST['nameInput'];
+
+if ($id) {
+    // Modificar mesa existente
+    $result = $controller->updateTable($id, $name);
+} else {
+    // Crear nueva mesa: se debe pasar $_POST como array completo
+    $result = $controller->saveNewTable($_POST);
+}
 ?>
 
 <!DOCTYPE html>
@@ -18,11 +25,13 @@ $result = empty($_POST['idInput'])
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resultado</title>
+    <title>Resultado de la operación</title>
 </head>
 <body>
     <h1>Resultado de la operación</h1>
-    <p><?= $result ? 'Datos GUARDADOS' : 'No se pudo GUARDAR los datos' ?></p>
-    <a href="../restaurant_tables.php">Volver</a>
+
+    <p><?= $result ?></p> <!-- Muestra el mensaje devuelto -->
+
+    <a href="restaurant_tables.php">Volver a las Mesas</a>
 </body>
 </html>

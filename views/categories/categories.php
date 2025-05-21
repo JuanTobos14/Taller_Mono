@@ -1,8 +1,9 @@
 <?php
-include '../models/drivers/conexDB.php';
-include '../models/entities/entity.php';
-include '../models/entities/category.php';
-include '../controllers/categoriesController.php';
+include '../../models/drivers/conexDB.php';
+include '../../models/entities/entity.php';
+include '../../models/entities/category.php';
+include '../../models/entities/dishe.php';
+include '../../controllers/categoriesController.php';
 
 use app\controllers\CategoriesController;
 
@@ -21,14 +22,23 @@ $categories = $controller->queryAllCategories();
     <h1>Categorías</h1>
 
     <div class="menu">
-        <a href="categories.php">Categorías</a>
-        <a href="dishes.php">Platos</a>
-        <a href="orders.php">Ordenes</a>
-        <a href="order_details.php">Detalles Orden</a>
-        <a href="restaurant_tables.php">Mesas</a>
+        <a href="../../index.html">Pag. Principal</a>
+        <a href="../categories/categories.php">Categorías</a>
+        <a href="../dishes/dishes.php">Platos</a>
+        <a href="../orders/orders.php">Ordenes</a>
+        <a href="../order_details/order_details.php">Detalles Orden</a>
+        <a href="../tables/restaurant_tables.php">Mesas</a>
     </div>
 
     <a href="form_category.php">Registrar nueva categoría</a>
+
+    <!-- Mensaje de éxito o error -->
+    <?php if (isset($_GET['result'])): ?>
+        <p>
+            <?= ($_GET['result'] === 'success') ? 'Operación realizada con éxito.' : 'Error al realizar la operación.' ?>
+        </p>
+    <?php endif; ?>
+
     <table>
         <thead>
             <tr>
@@ -44,7 +54,7 @@ $categories = $controller->queryAllCategories();
                     <td><?= $category->get('name') ?></td>
                     <td>
                         <a href="form_category.php?id=<?= $category->get('id') ?>">Modificar</a>
-                        <a href="actions/deleteCategory.php?id=<?= $category->get('id') ?>" onclick="return confirm('¿Estás seguro de que deseas eliminar esta categoría?');">Eliminar</a>
+                        <a href="deleteCategory.php?id=<?= $category->get('id') ?>" onclick="return confirm('¿Estás seguro de que deseas eliminar esta categoría?');">Eliminar</a>
                     </td>
                 </tr>
             <?php endforeach; ?>

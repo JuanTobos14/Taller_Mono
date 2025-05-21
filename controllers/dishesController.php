@@ -1,55 +1,73 @@
 <?php
-
 namespace app\controllers;
+
 use app\models\entities\Dishe;
+use app\models\entities\Category;
+use app\models\entities\OrderDetail;
 
 class DishesController
 {
-    public function queryAllDishes()
+    // Registrar un nuevo plato
+    public function saveNewDish($request)
     {
-        $dishe= new Dishe();
-        $data= $dishe->all();
-        return $data;
+        // Asegurarse de que el formulario envía correctamente el valor de idCategoryInput
+        if (isset($request['idCategoryInput'])) {
+            $dish = new Dishe();
+            $dish->set('description', $request['descriptionInput']);
+            $dish->set('price', $request['priceInput']);
+            $dish->set('idCategory', $request['idCategoryInput']);  // Cambié a 'idCategoryInput'
+            return $dish->save() ? "Plato registrado correctamente." : "Error al registrar el plato.";
+        } else {
+            return "Error: La categoría no fue seleccionada.";
+        }
     }
 
-    public function saveNewDishe($request)
+    // Actualizar un plato
+    public function updateDish($request)
     {
-        $dishe= new Dishe();
-        $dishe->set('description', $request['descriptionInput']);
-        $dishe->set('price', $request['priceInput']);
-        $dishe->set('idCategory', $request['idCategory']);
-        return $dishe->save();
+        $dish = new Dishe();
+        $dish->set('id', $request['idInput']);
+        $dish->set('description', $request['descriptionInput']);
+        $dish->set('price', $request['priceInput']);
+        $dish->set('idCategory', $request['idCategoryInput']);  // Cambié a 'idCategoryInput'
+        return $dish->update() ? "Plato actualizado correctamente." : "Error al actualizar el plato.";
     }
 
-    public function updateDishe($request)
+    // Eliminar un plato
+    public function deleteDish($id)
     {
-        $dishe = new Dishe();
-        $dishe->set('id', $request['idInput']);
-        $dishe->set('description', $request['descriptionInput']);
-        $dishe->set('price', $request['priceInput']);
-        $dishe->set('idCategory', $request['idCategory']);
-        return $dishe->update();
-    }
+        $dish = new Dishe();
+        $dish->set('id', $id);
 
-    public function deleteDishe($id)
-    {
-        $dishe = new Dishe();
-
-        $db = new \app\models\drivers\ConexDB();
-        $sql = "SELECT COUNT(*) AS count FROM order_details WHERE idDish = $id";
-        $result = $db->execSQL($sql);
-        $row = $result->fetch_assoc();
-
-        if ($row['count'] > 0) {
-            $db->close();
-            return false;
+        // Verificar si el plato está asociado a algún pedido antes de eliminar
+        $orderDetails = new \app\models\entities\OrderDetail();
+        $orderDetails->set('idDish', $id);
+        $orderDetailsData = $orderDetails->all();
+        
+        if (count($orderDetailsData) > 0) {
+            return "No se puede eliminar el plato porque está asociado a una orden.";
         }
 
-        $dishe->set('id', $id);
-        $result = $dishe->delete();
-
-        $db->close();
-        return $result;
+        return $dish->delete() ? "Plato eliminado correctamente." : "Error al eliminar el plato.";
     }
+
+    // Listar todos los platos
+    public function queryAllDishes($categoryId = null)
+    {
+        $dish = new Dishe();
     
+        // Si se pasa un categoryId, se filtra por categoría
+        if ($categoryId !== null) {
+            $dish->set('idCategory', $categoryId);
+        }
+    
+        return $dish->all(); // Obtener los platos según la categoría (si se pasa)
+    }
+
+    // Obtener todas las categorías
+    public function queryAllCategories()
+    {
+        $categoriesController = new \app\controllers\CategoriesController();
+        return $categoriesController->queryAllCategories();  // Esto devuelve las categorías desde CategoriesController
+    }
 }

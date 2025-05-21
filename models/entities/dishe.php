@@ -1,7 +1,7 @@
 <?php
-
 namespace app\models\entities;
 use app\models\drivers\ConexDB;
+use Exception;
 
 class Dishe extends Entity 
 {
@@ -10,13 +10,20 @@ class Dishe extends Entity
     protected $price = null;
     protected $idCategory = null;
 
-
     public function all()
     {
-        $sql = "select * from dishes";
+        // Si idCategory está definido, solo se filtra por esa categoría
+        if ($this->idCategory !== null) {
+            $sql = "SELECT * FROM dishes WHERE idCategory = {$this->idCategory}";
+        } else {
+            // Si no se pasa idCategory, obtenemos todos los platos
+            $sql = "SELECT * FROM dishes";
+        }
+    
         $conex = new ConexDB();
         $resultDb = $conex->execSQL($sql);
         $dishes = [];
+    
         if ($resultDb->num_rows > 0) {
             while ($rowDb = $resultDb->fetch_assoc()) {
                 $dishe = new Dishe();
@@ -27,14 +34,14 @@ class Dishe extends Entity
                 array_push($dishes, $dishe);
             }
         }
+    
         $conex->close();
-        return $dishes;
+        return $dishes;  // Retorna un array de objetos Dishe
     }
 
     public function save()
     {
-        $sql = "insert into dishes (description,price,idCategory) values";
-        $sql .= "('".$this->description."','". $this->price ."',". $this->idCategory .")";
+        $sql = "INSERT INTO dishes (description, price, idCategory) VALUES ('".$this->description."', '".$this->price."', ".$this->idCategory.")";
         $conex = new ConexDB();
         $resultDB = $conex->execSQL($sql);
         $conex->close();
@@ -43,11 +50,7 @@ class Dishe extends Entity
 
     public function update()
     {
-        $sql = "update dishes set ";
-        $sql .= "description='".$this->description."',";
-        $sql .= "price='".$this->price."',";
-        $sql .= "idCategory=".$this->idCategory;
-        $sql .= " where id=" .$this->id;
+        $sql = "UPDATE dishes SET description='".$this->description."', price='".$this->price."', idCategory=".$this->idCategory." WHERE id=".$this->id;
         $conex = new ConexDB();
         $resultDB = $conex->execSQL($sql);
         $conex->close();
@@ -56,8 +59,19 @@ class Dishe extends Entity
 
     public function delete()
     {
-        $sql = "delete from dishes where id=" . $this->id;
+        // Verificar si el plato está asociado a alguna orden
+        $sql = "SELECT COUNT(*) AS order_count FROM order_details WHERE idDish = " . $this->id;
         $conex = new ConexDB();
+        $result = $conex->execSQL($sql);
+        $row = $result->fetch_assoc();
+    
+        if ($row['order_count'] > 0) {
+            $conex->close();
+            return false; // No se puede eliminar el plato si está asociado a una orden
+        }
+    
+        // Si no está asociado a órdenes, proceder con la eliminación
+        $sql = "DELETE FROM dishes WHERE id = " . $this->id;
         $resultDB = $conex->execSQL($sql);
         $conex->close();
         return $resultDB;

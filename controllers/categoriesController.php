@@ -1,48 +1,96 @@
 <?php
-
 namespace app\controllers;
+// Cargar manualmente las clases necesarias
+require_once __DIR__ . '/../models/entities/Category.php';
+require_once __DIR__ . '/../models/entities/Dishe.php';
+require_once __DIR__ . '/../models/drivers/ConexDB.php';
+
 use app\models\entities\Category;
+use app\models\entities\Dishe;
 use app\models\drivers\ConexDB;
 
 class CategoriesController
 {
-    public function queryAllCategories()
+    private $conex;
+
+    public function __construct()
     {
-        $category = new Category();
-        $data = $category->all();
-        return $data;
+        // Inicializamos la conexión a la base de datos
+        $this->conex = new ConexDB();
     }
 
+    // Registrar una nueva categoría
     public function saveNewCategory($request)
     {
-        $category = new Category();
-        $category->set('name', $request['nameInput']);
-        return $category->save();
+        try {
+            $category = new Category();
+            $category->set('name', $request['nameInput']);
+
+            if ($category->save()) {
+                return "Categoría registrada correctamente.";
+            } else {
+                return "Error al registrar la categoría.";
+            }
+        } catch (\Exception $e) {
+            return "Error al registrar la categoría: " . $e->getMessage();
+        }
     }
 
-    public function updateCategory($request)
+    // Actualizar una categoría
+    public function updateCategory($data)
     {
-        $category = new Category();
-        $category->set('id', $request['idInput']);
-        $category->set('name', $request['nameInput']);
-        return $category->update();
+        try {
+            $id = $data['idInput'];
+            $name = $data['nameInput'];
+            
+            $query = "UPDATE categories SET name = '{$name}' WHERE id = {$id}";
+            
+            if ($this->conex->execSQL($query)) {
+                return "Categoría actualizada correctamente.";
+            } else {
+                return "Error al actualizar la categoría.";
+            }
+        } catch (\Exception $e) {
+            return "Error al actualizar la categoría: " . $e->getMessage();
+        }
     }
 
+    // Eliminar una categoría
     public function deleteCategory($id)
     {
-        $category = new Category();
-        $category->set('id', $id);
-        $conex = new ConexDB();
-        $sql = "SELECT * FROM dishes WHERE idCategory = " . $category->get('id');
-        $resultDb = $conex->execSQL($sql);
+        try {
+            $category = new Category();
+            $category->set('id', $id);
 
-        if ($resultDb->num_rows > 0) {
-            $conex->close();
-            return "No se puede eliminar la categoría porque está asociada a uno o más platos.";
+            $dishe = new Dishe();
+            $dishe->set('idCategory', $id);
+            $dishes = $dishe->all();
+            
+            if (count($dishes) > 0) {
+                return "No se puede eliminar la categoría porque tiene platos asociados.";
+            }
+
+            if ($category->delete()) {
+                return "Categoría eliminada correctamente.";
+            } else {
+                return "Error al eliminar la categoría.";
+            }
+        } catch (\Exception $e) {
+            return "Error al eliminar la categoría: " . $e->getMessage();
         }
-        $deleted = $category->delete();
-        $conex->close();
+    }
 
-        return $deleted ? "Categoría eliminada correctamente." : "Error al eliminar la categoría.";
+    // Listar todas las categorías
+    public function queryAllCategories()
+    {
+        try {
+            $category = new Category();
+            $categories = $category->all();  // Obtener todas las categorías
+            
+            // Asegúrate de que siempre retorne un array
+            return is_array($categories) ? $categories : [];
+        } catch (\Exception $e) {
+            return "Error al listar las categorías: " . $e->getMessage();
+        }
     }
 }

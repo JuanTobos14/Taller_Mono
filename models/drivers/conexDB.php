@@ -4,7 +4,8 @@ namespace app\models\drivers;
 
 use mysqli;
 
-class ConexDB {
+class ConexDB
+{
     private $host = 'localhost';
     private $user = 'root';
     private $pwd = '';
@@ -12,6 +13,11 @@ class ConexDB {
 
     private $conex = null;
 
+    public function getConex()
+    {
+        return $this->conex;
+    }
+    
     public function __construct()
     {
         $this->conex = new mysqli(
