@@ -2,16 +2,11 @@
 
 namespace app\controllers;
 
-require_once __DIR__ . '/../models/entities/order.php';  // Asegúrate de incluir la clase Order
-
-use app\models\entities\Table;
-use app\models\entities\Order;  // Ahora Order debe ser encontrado correctamente
-namespace app\controllers;
-
 require_once __DIR__ . '/../models/entities/order.php';
 
 use app\models\entities\Table;
 use app\models\entities\Order;
+use app\models\drivers\ConexDB;
 
 class TablesController
 {
@@ -59,13 +54,16 @@ class TablesController
     // Consultar si una mesa está asociada a órdenes (para eliminar)
     public function isTableInUse($id)
     {
-        // Verificar si existe alguna orden relacionada con la mesa
-        $order = new Order();
-        $order->set('idTable', $id);
-        $orders = $order->all();
-        return count($orders) > 0;  // Devuelve true si está en uso, false si no lo está
-    }
+        $sql = "SELECT COUNT(*) AS order_count FROM orders WHERE idTable = {$id}";
+        $conex = new ConexDB();
+        $result = $conex->execSQL($sql);
+        $row = $result->fetch_assoc();
 
+        $conex->close();
+
+        return $row['order_count'] > 0;  // Si hay órdenes, la mesa está en uso
+    }
+    
     // Consultar mesa por ID
     public function queryTableById($id)
     {
