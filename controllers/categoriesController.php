@@ -15,11 +15,9 @@ class CategoriesController
 
     public function __construct()
     {
-        // Inicializamos la conexión a la base de datos
         $this->conex = new ConexDB();
     }
 
-    // Registrar una nueva categoría
     public function saveNewCategory($request)
     {
         try {
@@ -36,7 +34,6 @@ class CategoriesController
         }
     }
 
-    // Actualizar una categoría
     public function updateCategory($data)
     {
         try {
@@ -55,7 +52,6 @@ class CategoriesController
         }
     }
 
-    // Eliminar una categoría
     public function deleteCategory($id)
     {
         try {
@@ -80,14 +76,12 @@ class CategoriesController
         }
     }
 
-    // Listar todas las categorías
     public function queryAllCategories()
     {
         try {
             $category = new Category();
-            $categories = $category->all();  // Obtener todas las categorías
+            $categories = $category->all();
             
-            // Asegúrate de que siempre retorne un array
             return is_array($categories) ? $categories : [];
         } catch (\Exception $e) {
             return "Error al listar las categorías: " . $e->getMessage();

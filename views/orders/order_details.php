@@ -54,14 +54,14 @@ if ($orderId) {
                         <tr>
                             <td><?php echo htmlspecialchars($detail['dishName']); ?></td>
                             <td><?php echo htmlspecialchars($detail['quantity']); ?></td>
-                            <td><?php echo number_format($detail['price'], 2, ',', '.'); ?>€</td>
-                            <td><?php echo number_format($subtotal, 2, ',', '.'); ?>€</td>
+                            <td><?php echo number_format($detail['price'], 2, ',', '.'); ?></td>
+                            <td><?php echo number_format($subtotal, 2, ',', '.'); ?></td>
                         </tr>
                     <?php } ?>
                 </tbody>
             </table>
 
-            <h3>Total de la Orden: <?php echo number_format($totalOrder, 2, ',', '.'); ?>€</h3>
+            <h3>Total de la Orden: <?php echo number_format($totalOrder, 2, ',', '.'); ?></h3>
         <?php elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && !$orderDetails): ?>
             <p>No se encontraron detalles para la orden con ID #<?php echo htmlspecialchars($orderId); ?>.</p>
         <?php endif; ?>
